@@ -9,7 +9,16 @@ using System.Web.Http;
 namespace DemoAPI.Controllers
 {
     public class PeopleController : ApiController
+
     {
+
+        //private readonly DatabaseContext _databaseContext;
+        private DatabaseContext db = new DatabaseContext();
+        /*public PeopleController(DatabaseContext databaseContext)
+        {
+            _databaseContext = databaseContext;
+        }*/
+        
         List<Person> people = new List<Person>();
 
         public PeopleController()
@@ -19,10 +28,13 @@ namespace DemoAPI.Controllers
             people.Add(new Person() { Id = 3, FirstName = "Jon", LastName = "Jensen" });
             people.Add(new Person() { Id = 4, FirstName = "Ben", LastName = "Pedersen" });
         }
+
+        [HttpGet]
         // GET: api/People
         public List<Person> Get()
         {
-            return people;
+            //return people;
+            return db.person.ToList();
         }
 
         // GET: api/People/5
@@ -47,6 +59,7 @@ namespace DemoAPI.Controllers
             return listOfFirstName;
         }
 
+        [HttpPost]
         // POST: api/People
         public void Post(Person personAdd)
         {
@@ -54,7 +67,19 @@ namespace DemoAPI.Controllers
             /*var addPerson = new Person(){Id=5,FirstName="Mikki", LastName="Bery" };
             people.Add(addPerson);*/
 
-            people.Add(personAdd);
+           // people.Add(personAdd);
+
+           
+                personAdd = new Person()
+                {
+                    Id = personAdd.Id,
+                    FirstName = personAdd.FirstName,
+                    LastName = personAdd.LastName
+                };
+            
+
+            db.person.Add(personAdd);
+            db.SaveChanges();
         }
 
         // PUT: api/People/5
