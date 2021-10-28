@@ -12,13 +12,11 @@ namespace DemoAPI.Controllers
 
     {
 
-        //private readonly DatabaseContext _databaseContext;
         private DatabaseContext db = new DatabaseContext();
-        /*public PeopleController(DatabaseContext databaseContext)
-        {
-            _databaseContext = databaseContext;
-        }*/
         
+        
+
+        //hard code dele:
         List<Person> people = new List<Person>();
 
         public PeopleController()
@@ -28,6 +26,9 @@ namespace DemoAPI.Controllers
             people.Add(new Person() { Id = 3, FirstName = "Jon", LastName = "Jensen" });
             people.Add(new Person() { Id = 4, FirstName = "Ben", LastName = "Pedersen" });
         }
+
+
+
 
         [HttpGet]
         // GET: api/People
@@ -40,7 +41,11 @@ namespace DemoAPI.Controllers
         // GET: api/People/5
         public Person Get(int id)
         {
-            var p = people.Where(x => x.Id == id).FirstOrDefault();
+            //hard code dele:
+            /* var p = people.Where(x => x.Id == id).FirstOrDefault();
+             return p;*/
+
+            var p = db.person.FirstOrDefault(x => x.Id == id);
             return p;
         }
 
@@ -82,18 +87,33 @@ namespace DemoAPI.Controllers
             db.SaveChanges();
         }
 
+        [HttpPut]
         // PUT: api/People/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id , Person personUpdate)
         {
-            var personUpdate = people.FirstOrDefault(x => x.Id == id);
-            personUpdate.LastName = "PUHEEE";
+            //hard code dele:
+            /*var personUpdate = people.FirstOrDefault(x => x.Id == id);
+            personUpdate.LastName = "PUHEEE";*/
+
+            //var personUpdate = db.person.FirstOrDefault(x => x.Id == id);
+            db.Entry(personUpdate).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            db.SaveChanges();
         }
 
+
+
+        [HttpDelete]
         // DELETE: api/People/5
         public void Delete(int id)
         {
-            var personDelete = people.FirstOrDefault(x => x.Id == id);
-            people.Remove(personDelete);
+
+            //hard code dele:
+            /*var personDelete = people.FirstOrDefault(x => x.Id == id);
+            people.Remove(personDelete);*/
+
+            var personDelete = db.person.FirstOrDefault(x => x.Id == id);
+            db.person.Remove(personDelete);
+            db.SaveChanges();
         }
     }
 }
