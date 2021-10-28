@@ -5,7 +5,7 @@ using System.Web;
 
 namespace DemoAPI.Models
 {
-    public class DataContext
+    public class DataContext 
     {
 
     }

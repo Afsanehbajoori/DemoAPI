@@ -32,11 +32,29 @@ namespace DemoAPI.Controllers
             return p;
         }
 
-        // POST: api/People
-        public void Post([FromBody]string value)
+        //Get med specific route
+        [Route("api/People/GetFirstName")]
+        [HttpGet]
+        public List<string> GetFirstName()
         {
-            var addPerson = new Person(){Id=5,FirstName="Mikki", LastName="Bery" };
-            people.Add(addPerson);
+            List<string> listOfFirstName = new List<string>();
+
+            foreach (var p in people)
+            {
+                listOfFirstName.Add(p.FirstName);
+            }
+
+            return listOfFirstName;
+        }
+
+        // POST: api/People
+        public void Post(Person personAdd)
+        {
+            //hard code mode:
+            /*var addPerson = new Person(){Id=5,FirstName="Mikki", LastName="Bery" };
+            people.Add(addPerson);*/
+
+            people.Add(personAdd);
         }
 
         // PUT: api/People/5
