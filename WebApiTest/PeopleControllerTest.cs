@@ -19,6 +19,11 @@ namespace WebApiTest
             _controller = new PeopleController();
             _dbContext = new DatabaseContext();
         }
+
+        public void TestDatabase()
+        {
+            
+        }
         
         [Fact]
         public void TestGetMethod()
