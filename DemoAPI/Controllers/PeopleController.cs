@@ -65,7 +65,7 @@ namespace DemoAPI.Controllers
         }
 
 
-        //Get med first Name
+        //Get all first Name
         [Route("api/People/GFN")]
         [HttpGet]
         public List<string> GetFN()
@@ -76,6 +76,23 @@ namespace DemoAPI.Controllers
                 LP.Add(i.FirstName);
             }
             return LP;
+        }
+
+        //serach with firstname
+        [Route("api/People/{firstname}")]
+        [HttpGet]
+        public List<string> GetFirstname(string firstname)
+        {
+            List<string> ListFirstN = new List<string>();
+            var pFN = db.person.Where(x => x.FirstName == firstname).ToList();
+
+            foreach (var item in pFN)
+            {
+                
+                ListFirstN.Add(item.LastName);
+            }
+            return ListFirstN;
+
         }
 
         [HttpPost]
