@@ -49,7 +49,7 @@ namespace DemoAPI.Controllers
             return p;
         }
 
-        //Get med specific route
+        //Get med specific route(hard code)
         [Route("api/People/GetFirstName")]
         [HttpGet]
         public List<string> GetFirstName()
@@ -62,6 +62,20 @@ namespace DemoAPI.Controllers
             }
 
             return listOfFirstName;
+        }
+
+
+        //Get med first Name
+        [Route("api/People/GFN")]
+        [HttpGet]
+        public List<string> GetFN()
+        {
+            List<string> LP = new List<string>();
+            foreach (var i in db.person)
+            {
+                LP.Add(i.FirstName);
+            }
+            return LP;
         }
 
         [HttpPost]
